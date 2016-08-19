@@ -115,8 +115,8 @@ function virtualKeyboardChromeExtension_click(key, skip) {
 				break;
 			case '&123':
 				virtualKeyboardChromeExtensionFormat = !virtualKeyboardChromeExtensionFormat;
-				document.getElementById('virtualKeyboardChromeExtensionMainKbd').style.display = virtualKeyboardChromeExtensionFormat ? "none" : "";
-				document.getElementById('virtualKeyboardChromeExtensionMainNumbers').style.display = virtualKeyboardChromeExtensionFormat ? "" : "none";
+				document.getElementById('virtualKeyboardChromeExtensionMainKbd').style.display = virtualKeyboardChromeExtensionFormat ? "" : "none";
+				document.getElementById('virtualKeyboardChromeExtensionMainNumbers').style.display = virtualKeyboardChromeExtensionFormat ? "none" : "";
 				break;
 			case 'Close':
 				if (virtualKeyboardChromeExtensionState) {
@@ -494,18 +494,18 @@ function virtualKeyboardChromeExtension_inputTypesRender() {
 		}
 	}
 	if (virtualKeyboardChromeExtensionElemType == "textarea") {
-		document.getElementById("virtualKeyboardChromeExtensionMainNumbers").style.display =  "none";
+		document.getElementById("virtualKeyboardChromeExtensionMainNumbers").style.display =  "";
 		document.getElementById("virtualKeyboardChromeExtensionNumberBarKbdInput").style.display =  "none";
-		document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display =  "";
+		document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display =  "none";
 		virtualKeyboardChromeClassStyleDisplay("kbEmailInput", "none");
 	} else {
 		document.getElementById("virtualKeyboardChromeExtensionNumberBarKbdInput").style.display =  "none";
-		document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display =  "";
-		document.getElementById("virtualKeyboardChromeExtensionMainNumbers").style.display =  "none";
+		document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display =  "none";
+		document.getElementById("virtualKeyboardChromeExtensionMainNumbers").style.display =  "";
 		virtualKeyboardChromeClassStyleDisplay("kbEmailInput", "none");
 		if ((virtualKeyboardChromeExtensionClickedElem.getAttribute("_originalType") == "number") || (virtualKeyboardChromeExtensionClickedElem.getAttribute("_originalType") == "tel")) {
-			document.getElementById("virtualKeyboardChromeExtensionNumberBarKbdInput").style.display =  "";
-			document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display =  "none";
+			document.getElementById("virtualKeyboardChromeExtensionNumberBarKbdInput").style.display =  "none";
+			document.getElementById("virtualKeyboardChromeExtensionMainKbd").style.display =  "";
 		} else if (virtualKeyboardChromeExtensionClickedElem.getAttribute("_originalType") == "email") {
 			virtualKeyboardChromeClassStyleDisplay("kbEmailInput", "");
 		}
@@ -516,6 +516,8 @@ var iframeElemSent = 0;
 
 var virtualKeyboardChromeExtensionKeyboardLoaded1 = "";
 function virtualKeyboardChromeExtension_open(posY, posX, force) {
+	var e = document.activeElement;
+	e.select();
 	if (top != self) {
 		if (virtualKeyboardChromeExtensionClickedElem.id == "") {
 			virtualKeyboardChromeExtensionClickedElem.id = "CVK_E_"+iframeElemSent;
@@ -1276,6 +1278,7 @@ function init_virtualKeyboardChromeExtension_false() {
 				e.blur();
 				init_virtualKeyboardChromeExtension(false);
 				e.focus();
+				e.select();
 			}
 		}
 		delete e;
@@ -1384,6 +1387,7 @@ function vk_ajax_load_main() {
 		autoTriggerAfter = response.autoTriggerAfter*1000;
 	});
 	virtualKeyboardChromeExtensionKeyboardElement.innerHTML = xhr.responseText;
+	//document.body.style‌​.Transform = "translateY(-150px)";
 	document.body.appendChild(virtualKeyboardChromeExtensionKeyboardElement);
 	init_virtualKeyboardChromeExtension(true);
 	setInterval(init_virtualKeyboardChromeExtension_false, 500);
